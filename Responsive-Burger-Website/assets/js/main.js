@@ -21,7 +21,6 @@ if (navClose) {
 const navLink = document.querySelectorAll(".nav__link");
 
 const linkAction = () => {
-  // When we click on each nav__link, we remove the show-menu class
   navMenu.classList.remove("show-menu");
 };
 
@@ -31,9 +30,8 @@ navLink.forEach((link) => link.addEventListener("click", linkAction));
 const header = document.getElementById("header");
 const homeSection = document.getElementById("home");
 
-// THE OLD WAY TO DO THIS
+//! THE OLD WAY TO DO THIS
 // const scrollHeader = () => {
-//   // Add a class if the bottom offset is greater than 50 of the header
 //   window.scrollY >= 50
 //     ? header.classList.add("scroll-header")
 //     : header.classList.remove("scroll-header");
@@ -41,7 +39,7 @@ const homeSection = document.getElementById("home");
 
 // window.addEventListener("scroll", scrollHeader);
 
-// THE NEW WAY TO DO THIS
+//! THE NEW WAY TO DO THIS
 const observer = new IntersectionObserver(
   (entries) => {
     const [entry] = entries;
