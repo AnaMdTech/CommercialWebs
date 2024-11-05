@@ -28,6 +28,37 @@ const linkAction = () => {
 navLink.forEach((link) => link.addEventListener("click", linkAction));
 
 /*=============== ADD SHADOW HEADER ===============*/
+const header = document.getElementById("header");
+const homeSection = document.getElementById("home");
+
+// THE OLD WAY TO DO THIS
+// const scrollHeader = () => {
+//   // Add a class if the bottom offset is greater than 50 of the header
+//   window.scrollY >= 50
+//     ? header.classList.add("scroll-header")
+//     : header.classList.remove("scroll-header");
+// };
+
+// window.addEventListener("scroll", scrollHeader);
+
+// THE NEW WAY TO DO THIS
+const observer = new IntersectionObserver(
+  (entries) => {
+    const [entry] = entries;
+    // console.log(entry);
+    if (!entry.isIntersecting) {
+      header.classList.add("shadow-header");
+    } else {
+      header.classList.remove("shadow-header");
+    }
+  },
+  {
+    root: null,
+    threshold: 1,
+  }
+);
+
+observer.observe(homeSection);
 
 /*=============== SHOW SCROLL UP ===============*/
 
