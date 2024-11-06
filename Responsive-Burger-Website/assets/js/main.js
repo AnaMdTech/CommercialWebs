@@ -40,7 +40,7 @@ const homeSection = document.getElementById("home");
 // window.addEventListener("scroll", scrollHeader);
 
 //! THE NEW WAY TO DO THIS
-const observer = new IntersectionObserver(
+const headerObserver = new IntersectionObserver(
   (entries) => {
     const [entry] = entries;
     // console.log(entry);
@@ -56,10 +56,86 @@ const observer = new IntersectionObserver(
   }
 );
 
-observer.observe(homeSection);
+headerObserver.observe(homeSection);
 
 /*=============== SHOW SCROLL UP ===============*/
+//! The Old Way of doing this
+// const scrollUp = () => {
+//   const scrollUp = document.getElementById("scroll-up");
+//   if (this.scrollY >= 350) scrollUp.classList.add("show-scroll");
+//   else scrollUp.classList.remove("show-scroll");
+// };
+
+// window.addEventListener("scroll", scrollUp);
+
+//! The New Way of doing this
+const scrollUpBtn = document.getElementById("scroll-up");
+
+const scrollUpBtnObserver = new IntersectionObserver(
+  (entries) => {
+    const [entry] = entries;
+    if (!entry.isIntersecting) {
+      scrollUpBtn.classList.add("show-scroll");
+    } else {
+      scrollUpBtn.classList.remove("show-scroll");
+    }
+  },
+  {
+    root: null,
+    threshold: 0.5,
+  }
+);
+
+scrollUpBtnObserver.observe(homeSection);
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
+//! Old Way of doing this
+// const sections = document.querySelectorAll("section[id]");
+// // console.log(sections);
+
+// const scrollActive = () => {
+//   const scrollDown = window.scrollY;
+
+//   sections.forEach((current) => {
+//     const sectionHeight = current.offsetHeight,
+//       sectionTop = current.offsetTop - 58,
+//       sectionId = current.getAttribute("id"),
+//       sectionsClass = document.querySelector(
+//         ".nav__menu a[href*=" + sectionId + "]"
+//       );
+
+//     if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
+//       sectionsClass.classList.add("active-link");
+//     } else {
+//       sectionsClass.classList.remove("active-link");
+//     }
+//   });
+// };
+
+// window.addEventListener("scroll", scrollActive);
+
+//! New Way of doing this
+const sections = document.querySelectorAll("section[id]");
+const options = {
+  root: null, // viewport
+  threshold: 0.6, // trigger when 50% of section is visible
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    const sectionId = entry.target.getAttribute("id");
+    const navLink = document.querySelector(`.nav__menu a[href*=${sectionId}]`);
+
+    if (entry.isIntersecting) {
+      navLink.classList.add("active-link");
+    } else {
+      navLink.classList.remove("active-link");
+    }
+  });
+}, options);
+
+sections.forEach((section) => {
+  observer.observe(section);
+});
 
 /*=============== SCROLL REVEAL ANIMATION ===============*/
