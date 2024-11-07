@@ -963,7 +963,7 @@ img {
   .contact__content {
     grid-template-columns: 420px 435px;
     justify-content: center;
-    column-gap: 6.5rem;
+    column-gap: 3.5rem;
   }
 
   .contact__data {
