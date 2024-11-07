@@ -12,7 +12,7 @@ The Responsive Burger Website is a modern web design created using HTML, CSS, an
 - **Scroll Animations**: Engaging animations trigger as users scroll through the website, adding visual appeal and interactivity.
 - **User-Friendly Interface**: A clean and aesthetically pleasing design that is easy to navigate.
 
-![preview img](/preview.png)
+![preview img](preview.png)
 You can view the live version of the Responsive Burger Website [here](https://burgerbite-ana-md.netlify.app/).
 
 ## Usage Instructions
