@@ -162,7 +162,209 @@ sr.reveal(`.recipe__data, .delivery__data, .contact__data`, {
 });
 sr.reveal(`.popular__card`, { interval: 100 });
 
-/*=============== CART FUNCTIONALITY ===============*/
+// Cart Modal
+// const cart = [];
+// const cartItems = document.getElementById("cart-items");
+// const cartTotal = document.getElementById("cart-total");
+
+// document.querySelectorAll(".order-btn").forEach((button) => {
+//   button.addEventListener("click", () => {
+//     const item = button.getAttribute("data-item");
+//     const price = parseFloat(button.getAttribute("data-price"));
+
+//     cart.push({ item, price });
+//     updateCart();
+//   });
+// });
+
+// function updateCart() {
+//   cartItems.innerHTML = cart
+//     .map(
+//       (item) => `<img src="${item.item}.png" alt="${item.item}">
+//     <p>${item.item}: $${item.price}</p>`
+//     )
+//     .join("");
+//   const total = cart.reduce((sum, item) => sum + item.price, 0);
+//   cartTotal.textContent = total.toFixed(2);
+// }
+
+// // Trigger payment (You'd typically call a backend API here)
+// document.getElementById("checkout-btn").addEventListener("click", () => {
+//   alert("Proceeding to payment...");
+//   // Redirect to payment page or payment gateway here
+// });
+
+// // Close cart modal
+// document.getElementById("cart-close").addEventListener("click", () => {
+//   document.getElementById("cart").classList.remove("show-modal");
+// });
+
+// // Open cart modal
+// document.querySelectorAll(".order-btn").forEach((button) => {
+//   button.addEventListener("click", () => {
+//     cart.classList.add("show");
+//   });
+// });
+
+// // cart icon functionality
+// const cartIcon = document.getElementById("cart-icon");
+// const cartCount = document.getElementById("cart-count");
+// console.log(cartCount);
+
+// // Array to store cart items
+// const cartItems = [];
+// const cartItemsContainer = document.getElementById("cart-items");
+// const totalPriceValue = document.getElementById("total-price-value");
+
+// document.querySelectorAll(".order-btn").forEach((button) => {
+//   button.addEventListener("click", () => {
+//     // Increment cart count display
+//     cartCount.textContent++;
+
+//     // Collect item details from button attributes
+//     const itemName = button.dataset.item;
+//     const itemPrice = parseFloat(button.dataset.price);
+//     const itemImgSrc = button.dataset.img;
+
+//     // Create item object with its data
+//     const cartItem = {
+//       name: itemName,
+//       price: itemPrice,
+//       img: itemImgSrc,
+//     };
+
+//     // Add item to cart array
+//     cartItems.push(cartItem);
+
+//     // Render cart item in modal
+//     renderCartItem(cartItem);
+
+//     // Update total price
+//     updateTotalPrice();
+//   });
+// });
+
+// // Function to render cart item in the modal
+// function renderCartItem(item) {
+//   // Create a div to hold the cart item structure
+//   const itemDiv = document.createElement("div");
+//   itemDiv.classList.add("cart__item");
+
+//   itemDiv.innerHTML = `
+//     <img src="${item.img}" alt="${item.name}" class="cart__item-img">
+//     <div class="cart__item-info">
+//       <h3 class="cart__item-name">${item.name}</h3>
+//       <span class="cart__item-price">$${item.price.toFixed(2)}</span>
+//     </div>
+//     <button class="remove-item-btn">Remove</button>
+//   `;
+
+//   // Add event listener to the remove button
+//   itemDiv.querySelector(".remove-item-btn").addEventListener("click", () => {
+//     // Remove item from cartItems array
+//     const index = cartItems.indexOf(item);
+//     if (index > -1) cartItems.splice(index, 1);
+
+//     // Remove item from the DOM
+//     itemDiv.remove();
+
+//     // Update total price
+//     updateTotalPrice();
+//   });
+
+//   // Append the item to the cart items container
+//   cartItemsContainer.appendChild(itemDiv);
+// }
+
+// // Function to update the total price in the cart footer
+// function updateTotalPrice() {
+//   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+//   totalPriceValue.textContent = total.toFixed(2);
+// }
+// Cart Modal Toggle
+// const cartModal = document.getElementById("cart-modal");
+// const closeCartButton = document.getElementById("close-cart");
+
+// document.querySelectorAll(".order-btn").forEach((button) => {
+//   button.addEventListener("click", () => {
+//     const itemName = button.dataset.item;
+//     const itemPrice = parseFloat(button.dataset.price);
+//     const itemImg = button.dataset.img;
+
+//     addToCart(itemName, itemPrice, itemImg);
+//     updateCart();
+//   });
+// });
+
+// closeCartButton.addEventListener("click", () => {
+//   cartModal.classList.remove("show");
+// });
+
+// function toggleCart() {
+//   cartModal.classList.toggle("show");
+// }
+
+// // Cart Array to Store Items
+// let cartItems = [];
+
+// // Add Item to Cart Function
+// function addToCart(name, price, imgSrc) {
+//   const existingItem = cartItems.find((item) => item.name === name);
+//   if (existingItem) {
+//     existingItem.quantity += 1;
+//   } else {
+//     cartItems.push({ name, price, imgSrc, quantity: 1 });
+//   }
+// }
+
+// // Update Cart Modal Display
+// function updateCart() {
+//   const cartItemsContainer = document.getElementById("cart-items");
+//   const totalPriceValue = document.getElementById("total-price-value");
+//   cartItemsContainer.innerHTML = "";
+
+//   let total = 0;
+//   cartItems.forEach((item) => {
+//     const itemTotal = item.price * item.quantity;
+//     total += itemTotal;
+
+//     const cartItemElement = document.createElement("div");
+//     cartItemElement.classList.add("cart__item");
+//     cartItemElement.innerHTML = `
+//       <img src="${item.imgSrc}" class="cart__item-img" alt="${item.name}">
+//       <div class="cart__item-info">
+//         <p class="cart__item-name">${item.name}</p>
+//         <p class="cart__item-price">$${item.price} x ${
+//       item.quantity
+//     } = $${itemTotal.toFixed(2)}</p>
+//       </div>
+//       <button class="remove-item-btn" onclick="removeItemFromCart('${
+//         item.name
+//       }')">Remove</button>
+//     `;
+//     cartItemsContainer.appendChild(cartItemElement);
+//   });
+
+//   totalPriceValue.textContent = total.toFixed(2);
+// }
+
+// // Remove Item from Cart
+// function removeItemFromCart(name) {
+//   cartItems = cartItems.filter((item) => item.name !== name);
+//   updateCart();
+// }
+
+// // Open Cart Modal When "Proceed to Payment" Button is Clicked
+// const checkoutBtn = document.getElementById("checkout-btn");
+// checkoutBtn.addEventListener("click", () => {
+//   if (cartItems.length > 0) {
+//     alert("Proceeding to payment!");
+//     cartItems = []; // Clear the cart after checkout
+//     updateCart();
+//   } else {
+//     alert("Your cart is empty!");
+//   }
+// });
 // cart icon functionality
 const cartIcon = document.getElementById("cart-icon");
 const cartCount = document.getElementById("cart-count");
@@ -183,15 +385,6 @@ cartCount.textContent = 0;
 
 cartIcon.addEventListener("click", () => {
   cartTab.classList.add("show-cart");
-  messageContainer.style.cssText = `
-  background-color: var(--first-color);
-  color: var(--title-color);
-  text-align: center;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-  cartItemsContainer.append(messageContainer);
 });
 
 cartClose.addEventListener("click", () => {
@@ -326,38 +519,26 @@ function calcTotalPrice() {
 }
 
 // Open CheckOut modal
-// Create the message container once
 const messageContainer = document.createElement("div");
 messageContainer.classList.add("message-container");
 messageContainer.style.cssText = `
-  background-color: var(--first-color);
-  color: var(--title-color);
-  text-align: center;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-`;
+    background-color: var(--first-color);
+    color: var(--title-color)
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+  `;
 messageContainer.textContent = "Your cart is empty!";
-
-cartItemsContainer.append(messageContainer);
-
-// Event listener for the checkout button
-checkoutBtn.addEventListener("click", function () {
-  // Check if the cart is empty
+checkoutBtn.addEventListener("click", function (e) {
+  // Prevent form submission if modal is open
+  e.preventDefault();
+  // Check if cart is empty and if messageContainer is already there
   if (cartItems.length === 0) {
-    // Append the message container if it’s not already present
-    if (cartItemsContainer.contains(messageContainer)) {
-      messageContainer.style.cssText = `
-        background-color: red;
-        color: white;
-        text-align: center;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-      `;
+    // Append the message container if it’s not already there
+    if (!cartItemsContainer.contains(messageContainer)) {
       cartItemsContainer.append(messageContainer);
     }
-    // Prevent opening the checkout modal when the cart is empty
     return;
   } else {
     // Remove the message container if it’s there and the cart is not empty
@@ -368,11 +549,10 @@ checkoutBtn.addEventListener("click", function () {
 
   // Open modal
   checkoutModal.style.display = "block";
-  // Close cart tab
+  // close cartTab
   cartTab.classList.remove("show-cart");
-  // Apply overlay
+  // Apply Overlay
   overlay.style.display = "block";
-  // Focus on the full name field
   document.getElementById("full-name").focus();
 });
 
@@ -428,7 +608,8 @@ function processUserData() {
 // processUserData();
 
 // Place Order
-placeOrderBtn.addEventListener("click", function () {
+placeOrderBtn.addEventListener("click", function (e) {
+  e.preventDefault();
   // Process User Data
   processUserData();
   // Clear input fields
@@ -451,7 +632,7 @@ function successMessageGenerator() {
            fullName.split(" ")[0].slice(1)
          }, your order is successfully placed!</h2>
          <p>Thank you for your order.</p>
-         <a href="#" class="check-status-btn">Close</a>
+         <a href="#" class="check-status-btn">Check Status</a>
       </div>
 `;
 
