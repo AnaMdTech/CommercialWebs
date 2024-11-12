@@ -7,6 +7,7 @@ const navMenu = document.getElementById("nav-menu"),
 if (navToggle) {
   navToggle.addEventListener("click", () => {
     navMenu.classList.add("show-menu");
+    document.querySelector(".nav__link--cart").style.display = "none";
   });
 }
 
@@ -14,6 +15,7 @@ if (navToggle) {
 if (navClose) {
   navClose.addEventListener("click", () => {
     navMenu.classList.remove("show-menu");
+    document.querySelector(".nav__link--cart").style.display = "block";
   });
 }
 
@@ -159,3 +161,309 @@ sr.reveal(`.recipe__data, .delivery__data, .contact__data`, {
   origin: "right",
 });
 sr.reveal(`.popular__card`, { interval: 100 });
+
+/*=============== CART FUNCTIONALITY ===============*/
+// cart icon functionality
+const cartIcon = document.getElementById("cart-icon");
+const cartCount = document.getElementById("cart-count");
+const cartTab = document.getElementById("cart-tab");
+const cartClose = document.querySelector(".close");
+const orderBtn = document.querySelectorAll(".order-btn");
+const cartItemsContainer = document.querySelector(".listCart");
+const removeItemBtn = document.querySelector(".remove");
+const checkoutBtn = document.getElementById("checkout-btn");
+const checkoutModal = document.getElementById("checkout-modal");
+const closeCheckout = document.getElementById("close-checkout");
+const overlay = document.getElementById("overlay");
+const placeOrderBtn = document.getElementById("place-order");
+const successModal = document.getElementById("success-modal");
+
+// Initialize cart count as integer
+cartCount.textContent = 0;
+
+cartIcon.addEventListener("click", () => {
+  cartTab.classList.add("show-cart");
+  messageContainer.style.cssText = `
+  background-color: var(--first-color);
+  color: var(--title-color);
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+`;
+  cartItemsContainer.append(messageContainer);
+});
+
+cartClose.addEventListener("click", () => {
+  cartTab.classList.remove("show-cart");
+});
+
+// Cart Array to Store Items
+let cartItems = [];
+let fullName, contact, address, notes;
+
+// Add Item to Cart Function
+function addToCart(itemName, itemPrice, itemImg, itemQuantity = 1) {
+  // Check if item already exists in cart
+  const existingItem = cartItems.find((item) => item.itemName === itemName);
+
+  if (existingItem) {
+    // Update the quantity and price if item already exists
+    existingItem.itemQuantity += 1;
+    existingItem.totalPrice =
+      existingItem.itemPrice * existingItem.itemQuantity;
+  } else {
+    // Increment cart count for new item only
+    cartCount.textContent = parseInt(cartCount.textContent) + 1;
+
+    // Add item to cart array if it's new
+    cartItems.push({
+      itemName,
+      itemPrice,
+      itemImg,
+      itemQuantity,
+      totalPrice: itemPrice,
+    });
+  }
+
+  // Render cart items
+  renderCartItems();
+  calcTotalPrice(); // Update total price after adding
+}
+
+// Render Cart Items in Modal
+function renderCartItems() {
+  // Clear previous items to avoid duplicates
+  cartItemsContainer.innerHTML = "";
+
+  // Render all items in the cart modal
+  cartItems.forEach((item) => {
+    const html = `
+      <div class="item">
+          <div class="image">
+             <img src="${item.itemImg}" alt="Product Image">
+          </div>
+          <div class="name">
+              ${item.itemName}
+          </div>
+          <div class="totalPrice">
+              $${item.totalPrice.toFixed(2)}
+          </div>
+          <div class="quantity">
+             <span class="minus" data-item="${item.itemName}">&lt;</span>
+             <span>${item.itemQuantity}</span>
+             <span class="plus" data-item="${item.itemName}">&gt;</span>
+          </div>
+          <div class="remove">
+               <i class="ri-delete-bin-line delete" data-item="${
+                 item.itemName
+               }"></i>
+          </div>
+       </div>
+    `;
+    cartItemsContainer.insertAdjacentHTML("beforeend", html);
+  });
+}
+
+// Event Listener for Increment, Decrement, and Delete Buttons
+cartItemsContainer.addEventListener("click", (event) => {
+  const itemName = event.target.dataset.item;
+  if (!itemName) return; // Ignore clicks outside buttons
+
+  // Find the item in the cart
+  const cartItem = cartItems.find((item) => item.itemName === itemName);
+
+  if (event.target.classList.contains("plus")) {
+    // Increment quantity and update total price
+    cartItem.itemQuantity += 1;
+    cartItem.totalPrice = cartItem.itemPrice * cartItem.itemQuantity;
+  } else if (event.target.classList.contains("minus")) {
+    if (cartItem.itemQuantity > 1) {
+      // Decrement quantity and update total price if quantity is greater than 1
+      cartItem.itemQuantity -= 1;
+      cartItem.totalPrice = cartItem.itemPrice * cartItem.itemQuantity;
+    } else {
+      // Remove item from cart if quantity is 1
+      cartItems = cartItems.filter((item) => item.itemName !== itemName);
+
+      // Decrease cart count for removed items
+      cartCount.textContent = parseInt(cartCount.textContent) - 1;
+    }
+  } else if (event.target.classList.contains("delete")) {
+    // Remove item from cart
+    cartItems = cartItems.filter((item) => item.itemName !== itemName);
+
+    // Decrease cart count for removed items
+    cartCount.textContent = parseInt(cartCount.textContent) - 1;
+  }
+
+  // Re-render cart items to show updated quantities and prices
+  renderCartItems();
+  calcTotalPrice(); // Update total price after removing
+});
+
+// Order Button Event Listeners
+orderBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    const itemName = button.dataset.item;
+    const itemPrice = parseFloat(button.dataset.price);
+    const itemImg = button.dataset.img;
+
+    console.log(itemName, itemPrice, itemImg);
+
+    // Add item to cart
+    addToCart(itemName, itemPrice, itemImg);
+  });
+});
+
+// Calculate total price
+function calcTotalPrice() {
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
+  console.log("Total Price:", totalPrice);
+  // Update total price in modal
+  document.getElementById("total-price-value").textContent =
+    totalPrice.toFixed(2);
+}
+
+// Open CheckOut modal
+// Create the message container once
+const messageContainer = document.createElement("div");
+messageContainer.classList.add("message-container");
+messageContainer.style.cssText = `
+  background-color: var(--first-color);
+  color: var(--title-color);
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+`;
+messageContainer.textContent = "Your cart is empty!";
+
+cartItemsContainer.append(messageContainer);
+
+// Event listener for the checkout button
+checkoutBtn.addEventListener("click", function () {
+  // Check if the cart is empty
+  if (cartItems.length === 0) {
+    // Append the message container if it’s not already present
+    if (cartItemsContainer.contains(messageContainer)) {
+      messageContainer.style.cssText = `
+        background-color: red;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+      `;
+      cartItemsContainer.append(messageContainer);
+    }
+    // Prevent opening the checkout modal when the cart is empty
+    return;
+  } else {
+    // Remove the message container if it’s there and the cart is not empty
+    if (cartItemsContainer.contains(messageContainer)) {
+      cartItemsContainer.removeChild(messageContainer);
+    }
+  }
+
+  // Open modal
+  checkoutModal.style.display = "block";
+  // Close cart tab
+  cartTab.classList.remove("show-cart");
+  // Apply overlay
+  overlay.style.display = "block";
+  // Focus on the full name field
+  document.getElementById("full-name").focus();
+});
+
+// Close Checkout modal
+closeCheckout.addEventListener("click", function () {
+  // Close modal
+  checkoutModal.style.display = "none";
+  // Open cartTab
+  // cartTab.classList.add("show-cart");
+  // Remove Overlay
+  overlay.style.display = "none";
+});
+
+// Close Checkout modal on outside click
+overlay.addEventListener("click", function () {
+  // Close modal
+  checkoutModal.style.display = "none";
+  // Open cartTab
+  // cartTab.classList.add("show-cart");
+  // Remove Overlay
+  overlay.style.display = "none";
+});
+
+// Process The User Data
+function processUserData() {
+  fullName = document.getElementById("full-name").value;
+  contact = document.getElementById("contact-number").value;
+  address = document.getElementById("address").value;
+  notes = document.getElementById("notes").value;
+  // Clear the User Data
+
+  // console.log(fullName, contact, address, notes);
+  // validate
+  // if (fullName === "" || contact === "" || address === "") {
+  //   console.log("Please fill in all required fields.");
+  //   return;
+  // }
+
+  // Show success message
+  successModal.style.display = "grid";
+  successMessageGenerator();
+  // Overlay
+  // overlay.style.display = "block";
+  // Clear Items Array
+  cartItems = [];
+  cartCount.textContent = 0;
+  renderCartItems();
+  calcTotalPrice(); // Update total price after removing
+  // Close Checkout modal
+  checkoutModal.style.display = "none";
+}
+
+// processUserData();
+
+// Place Order
+placeOrderBtn.addEventListener("click", function () {
+  // Process User Data
+  processUserData();
+  // Clear input fields
+  // Close Checkout modal
+  // checkoutModal.style.display = "none";
+  // Display Success Message
+  // document.getElementById("success-message").style.display = "block";
+});
+
+// success message function
+function successMessageGenerator() {
+  // Clear Success Message
+  document.getElementById("success-modal").innerHTML = "";
+  const successMessage = document.createElement("div");
+  successMessage.classList.add("success-message");
+  successMessage.innerHTML = `
+      <div class="modal-content">
+         <h2>Dear ${
+           fullName.split(" ")[0][0].toUpperCase() +
+           fullName.split(" ")[0].slice(1)
+         }, your order is successfully placed!</h2>
+         <p>Thank you for your order.</p>
+         <a href="#" class="check-status-btn">Close</a>
+      </div>
+`;
+
+  // Display Success Message
+  document.getElementById("success-modal").appendChild(successMessage);
+
+  const checkStatusBtn = successMessage.querySelector(".check-status-btn");
+  checkStatusBtn.addEventListener("click", function () {
+    successModal.style.display = "none";
+    overlay.style.display = "none";
+    fullName = contact = address = notes = "";
+
+    // Redirect to check status page
+  });
+}

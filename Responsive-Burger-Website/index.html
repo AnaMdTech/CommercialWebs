@@ -52,6 +52,8 @@
                <li>
                   <a href="#contact" class="nav__link">Contact</a>
                </li>
+
+
             </ul>
 
             <!-- Close Button -->
@@ -60,9 +62,18 @@
             </div>
          </div>
 
-         <!-- Toggle Button -->
-         <div class="nav__toggle" id="nav-toggle">
-            <i class="ri-apps-2-fill"></i>
+         <div class="nav__buttons">
+            <div class="nav__link--cart">
+               <!-- <i class="ri-shopping-cart-fill cart__icon"></i> -->
+               <i class="ri-shopping-bag-3-fill cart__icon" id="cart-icon" data-toggle="modal"
+                  data-target="#cart-modal"></i>
+               <span class="cart__count" id="cart-count">0</span>
+            </div>
+
+            <!-- Toggle Button -->
+            <div class="nav__toggle" id="nav-toggle">
+               <i class="ri-apps-2-fill"></i>
+            </div>
          </div>
       </nav>
    </header>
@@ -197,7 +208,8 @@
                   $6
                </span>
 
-               <button class="popular__button">
+               <button class="popular__button order-btn" data-item="Chicken Burger" data-price="6"
+                  data-img="assets/img/popular-burger-chicken.png">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
@@ -212,7 +224,8 @@
                   $10
                </span>
 
-               <button class="popular__button">
+               <button class="popular__button order-btn" data-item="Meat Burger" data-price="10"
+                  data-img="assets/img/popular-burger-meat.png">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
@@ -227,7 +240,8 @@
                   $12
                </span>
 
-               <button class="popular__button">
+               <button class="popular__button order-btn" data-item="Grill Burger" data-price="12"
+                  data-img="assets/img/popular-burger-grill.png">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
@@ -242,7 +256,8 @@
                   $8
                </span>
 
-               <button class="popular__button">
+               <button class="popular__button order-btn" data-item="Classic Burger" data-price="8"
+                  data-img="assets/img/popular-burger-classic.png">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
@@ -257,7 +272,8 @@
                   $15
                </span>
 
-               <button class="popular__button">
+               <button class="popular__button order-btn" data-item="Big Burger" data-price="15"
+                  data-img="assets/img/popular-burger-big.png">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
@@ -343,6 +359,88 @@
          </div>
       </section>
    </main>
+
+   <!-- Cart Modal -->
+   <div class="cartTab" id="cart-tab">
+      <div class="cart__header">
+         <h1 class="cart__title">Shopping Cart</h1>
+         <i class="ri-close-line close"></i>
+      </div>
+      <div class="listCart">
+         <!-- <div class="item">
+            <div class="image">
+               <img src="assets/img/popular-burger-meat.png" alt="Product Image">
+            </div>
+            <div class="name">
+               NAME
+            </div>
+            <div class="totalPrice">
+               $200
+            </div>
+            <div class="quantity">
+               <span class="minus">&lt;</span>
+               <span>1</span>
+               <span class="plus">&gt;</span>
+            </div>
+
+            <div class="remove">
+               <i class="ri-delete-bin-line delete"></i>
+            </div>
+         </div> -->
+         <!-- <div class="cart__empty">
+            Your cart is empty.
+         </div> -->
+      </div>
+
+      <!-- Cart Footer -->
+      <div class="cart__footer" id="cart-footer">
+         <div class="cart__total" id="cart-total">
+            <p>Total</p>
+            <span id="total-price">
+               <span id="currency">$</span>
+               <span id="total-price-value">0.00</span>
+            </span>
+         </div>
+         <a href="#" id="checkout-btn">Proceed to Payment</a>
+      </div>
+
+   </div>
+
+   <!-- Checkout Modal -->
+   <div id="checkout-modal" class="modal">
+      <!-- <div class="modal-content"> -->
+      <div class="modal-header">
+         <h2>Enter Delivery Details</h2>
+         <i class="ri-close-line close" id="close-checkout"></i>
+      </div>
+      <form id="delivery-form">
+         <input type="text" id="full-name" placeholder="Full Name" required="">
+
+         <input type="tel" id="contact-number" placeholder="Contact Number" required="">
+
+         <textarea id="address" rows="10" placeholder="Delivery Address" required=""></textarea>
+
+         <textarea id="notes" rows="10" placeholder="Additional Notes"></textarea>
+
+         <button type="submit" id="place-order">Place Order</button>
+      </form>
+      <!-- </div> -->
+   </div>
+
+   <!-- Success Message Modal -->
+   <div id="success-modal" class="modal">
+      <!-- <div class="modal-content">
+         <h2>Dear Ana, Your Order is Successfully Placed!</h2>
+         <p>Thank you for your order.</p>
+         <a href="#" class="check-status-btn">Check Status</a>
+      </div> -->
+   </div>
+
+   <!-- Overlay -->
+   <div id="overlay"></div>
+
+
+
 
    <!--==================== FOOTER ====================-->
    <footer class="footer">
