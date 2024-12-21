@@ -32,16 +32,6 @@ navLink.forEach((link) => link.addEventListener("click", linkAction));
 const header = document.getElementById("header");
 const homeSection = document.getElementById("home");
 
-//! THE OLD WAY TO DO THIS
-// const scrollHeader = () => {
-//   window.scrollY >= 50
-//     ? header.classList.add("scroll-header")
-//     : header.classList.remove("scroll-header");
-// };
-
-// window.addEventListener("scroll", scrollHeader);
-
-//! THE NEW WAY TO DO THIS
 const headerObserver = new IntersectionObserver(
   (entries) => {
     const [entry] = entries;
@@ -61,16 +51,6 @@ const headerObserver = new IntersectionObserver(
 headerObserver.observe(homeSection);
 
 /*=============== SHOW SCROLL UP ===============*/
-//! The Old Way of doing this
-// const scrollUp = () => {
-//   const scrollUp = document.getElementById("scroll-up");
-//   if (this.scrollY >= 350) scrollUp.classList.add("show-scroll");
-//   else scrollUp.classList.remove("show-scroll");
-// };
-
-// window.addEventListener("scroll", scrollUp);
-
-//! The New Way of doing this
 const scrollUpBtn = document.getElementById("scroll-up");
 
 const scrollUpBtnObserver = new IntersectionObserver(
@@ -91,32 +71,6 @@ const scrollUpBtnObserver = new IntersectionObserver(
 scrollUpBtnObserver.observe(homeSection);
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
-//! Old Way of doing this
-// const sections = document.querySelectorAll("section[id]");
-// // console.log(sections);
-
-// const scrollActive = () => {
-//   const scrollDown = window.scrollY;
-
-//   sections.forEach((current) => {
-//     const sectionHeight = current.offsetHeight,
-//       sectionTop = current.offsetTop - 58,
-//       sectionId = current.getAttribute("id"),
-//       sectionsClass = document.querySelector(
-//         ".nav__menu a[href*=" + sectionId + "]"
-//       );
-
-//     if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
-//       sectionsClass.classList.add("active-link");
-//     } else {
-//       sectionsClass.classList.remove("active-link");
-//     }
-//   });
-// };
-
-// window.addEventListener("scroll", scrollActive);
-
-//! New Way of doing this
 const sections = document.querySelectorAll("section[id]");
 const options = {
   root: null, // viewport
@@ -162,209 +116,7 @@ sr.reveal(`.recipe__data, .delivery__data, .contact__data`, {
 });
 sr.reveal(`.popular__card`, { interval: 100 });
 
-// Cart Modal
-// const cart = [];
-// const cartItems = document.getElementById("cart-items");
-// const cartTotal = document.getElementById("cart-total");
-
-// document.querySelectorAll(".order-btn").forEach((button) => {
-//   button.addEventListener("click", () => {
-//     const item = button.getAttribute("data-item");
-//     const price = parseFloat(button.getAttribute("data-price"));
-
-//     cart.push({ item, price });
-//     updateCart();
-//   });
-// });
-
-// function updateCart() {
-//   cartItems.innerHTML = cart
-//     .map(
-//       (item) => `<img src="${item.item}.png" alt="${item.item}">
-//     <p>${item.item}: $${item.price}</p>`
-//     )
-//     .join("");
-//   const total = cart.reduce((sum, item) => sum + item.price, 0);
-//   cartTotal.textContent = total.toFixed(2);
-// }
-
-// // Trigger payment (You'd typically call a backend API here)
-// document.getElementById("checkout-btn").addEventListener("click", () => {
-//   alert("Proceeding to payment...");
-//   // Redirect to payment page or payment gateway here
-// });
-
-// // Close cart modal
-// document.getElementById("cart-close").addEventListener("click", () => {
-//   document.getElementById("cart").classList.remove("show-modal");
-// });
-
-// // Open cart modal
-// document.querySelectorAll(".order-btn").forEach((button) => {
-//   button.addEventListener("click", () => {
-//     cart.classList.add("show");
-//   });
-// });
-
-// // cart icon functionality
-// const cartIcon = document.getElementById("cart-icon");
-// const cartCount = document.getElementById("cart-count");
-// console.log(cartCount);
-
-// // Array to store cart items
-// const cartItems = [];
-// const cartItemsContainer = document.getElementById("cart-items");
-// const totalPriceValue = document.getElementById("total-price-value");
-
-// document.querySelectorAll(".order-btn").forEach((button) => {
-//   button.addEventListener("click", () => {
-//     // Increment cart count display
-//     cartCount.textContent++;
-
-//     // Collect item details from button attributes
-//     const itemName = button.dataset.item;
-//     const itemPrice = parseFloat(button.dataset.price);
-//     const itemImgSrc = button.dataset.img;
-
-//     // Create item object with its data
-//     const cartItem = {
-//       name: itemName,
-//       price: itemPrice,
-//       img: itemImgSrc,
-//     };
-
-//     // Add item to cart array
-//     cartItems.push(cartItem);
-
-//     // Render cart item in modal
-//     renderCartItem(cartItem);
-
-//     // Update total price
-//     updateTotalPrice();
-//   });
-// });
-
-// // Function to render cart item in the modal
-// function renderCartItem(item) {
-//   // Create a div to hold the cart item structure
-//   const itemDiv = document.createElement("div");
-//   itemDiv.classList.add("cart__item");
-
-//   itemDiv.innerHTML = `
-//     <img src="${item.img}" alt="${item.name}" class="cart__item-img">
-//     <div class="cart__item-info">
-//       <h3 class="cart__item-name">${item.name}</h3>
-//       <span class="cart__item-price">$${item.price.toFixed(2)}</span>
-//     </div>
-//     <button class="remove-item-btn">Remove</button>
-//   `;
-
-//   // Add event listener to the remove button
-//   itemDiv.querySelector(".remove-item-btn").addEventListener("click", () => {
-//     // Remove item from cartItems array
-//     const index = cartItems.indexOf(item);
-//     if (index > -1) cartItems.splice(index, 1);
-
-//     // Remove item from the DOM
-//     itemDiv.remove();
-
-//     // Update total price
-//     updateTotalPrice();
-//   });
-
-//   // Append the item to the cart items container
-//   cartItemsContainer.appendChild(itemDiv);
-// }
-
-// // Function to update the total price in the cart footer
-// function updateTotalPrice() {
-//   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-//   totalPriceValue.textContent = total.toFixed(2);
-// }
-// Cart Modal Toggle
-// const cartModal = document.getElementById("cart-modal");
-// const closeCartButton = document.getElementById("close-cart");
-
-// document.querySelectorAll(".order-btn").forEach((button) => {
-//   button.addEventListener("click", () => {
-//     const itemName = button.dataset.item;
-//     const itemPrice = parseFloat(button.dataset.price);
-//     const itemImg = button.dataset.img;
-
-//     addToCart(itemName, itemPrice, itemImg);
-//     updateCart();
-//   });
-// });
-
-// closeCartButton.addEventListener("click", () => {
-//   cartModal.classList.remove("show");
-// });
-
-// function toggleCart() {
-//   cartModal.classList.toggle("show");
-// }
-
-// // Cart Array to Store Items
-// let cartItems = [];
-
-// // Add Item to Cart Function
-// function addToCart(name, price, imgSrc) {
-//   const existingItem = cartItems.find((item) => item.name === name);
-//   if (existingItem) {
-//     existingItem.quantity += 1;
-//   } else {
-//     cartItems.push({ name, price, imgSrc, quantity: 1 });
-//   }
-// }
-
-// // Update Cart Modal Display
-// function updateCart() {
-//   const cartItemsContainer = document.getElementById("cart-items");
-//   const totalPriceValue = document.getElementById("total-price-value");
-//   cartItemsContainer.innerHTML = "";
-
-//   let total = 0;
-//   cartItems.forEach((item) => {
-//     const itemTotal = item.price * item.quantity;
-//     total += itemTotal;
-
-//     const cartItemElement = document.createElement("div");
-//     cartItemElement.classList.add("cart__item");
-//     cartItemElement.innerHTML = `
-//       <img src="${item.imgSrc}" class="cart__item-img" alt="${item.name}">
-//       <div class="cart__item-info">
-//         <p class="cart__item-name">${item.name}</p>
-//         <p class="cart__item-price">$${item.price} x ${
-//       item.quantity
-//     } = $${itemTotal.toFixed(2)}</p>
-//       </div>
-//       <button class="remove-item-btn" onclick="removeItemFromCart('${
-//         item.name
-//       }')">Remove</button>
-//     `;
-//     cartItemsContainer.appendChild(cartItemElement);
-//   });
-
-//   totalPriceValue.textContent = total.toFixed(2);
-// }
-
-// // Remove Item from Cart
-// function removeItemFromCart(name) {
-//   cartItems = cartItems.filter((item) => item.name !== name);
-//   updateCart();
-// }
-
-// // Open Cart Modal When "Proceed to Payment" Button is Clicked
-// const checkoutBtn = document.getElementById("checkout-btn");
-// checkoutBtn.addEventListener("click", () => {
-//   if (cartItems.length > 0) {
-//     alert("Proceeding to payment!");
-//     cartItems = []; // Clear the cart after checkout
-//     updateCart();
-//   } else {
-//     alert("Your cart is empty!");
-//   }
-// });
+/*=============== CART FUNCTIONALITY ===============*/
 // cart icon functionality
 const cartIcon = document.getElementById("cart-icon");
 const cartCount = document.getElementById("cart-count");
@@ -379,12 +131,44 @@ const closeCheckout = document.getElementById("close-checkout");
 const overlay = document.getElementById("overlay");
 const placeOrderBtn = document.getElementById("place-order");
 const successModal = document.getElementById("success-modal");
+const clearCartBtn = document.getElementById("clear-cart"); // Clear Cart button
 
 // Initialize cart count as integer
 cartCount.textContent = 0;
 
+// Create the message container once
+const messageContainer = document.createElement("div");
+messageContainer.classList.add("message-container");
+messageContainer.style.cssText = `
+  background-color: var(--first-color);
+  color: var(--title-color);
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+`;
+messageContainer.textContent = "Your cart is empty!";
+
+// Function to set the empty message styles
+function setEmptyMessageStyle() {
+  messageContainer.style.backgroundColor = "red";
+  messageContainer.style.color = "white";
+}
+
+// Add the empty cart message to the cart container
+function updateCartMessage() {
+  if (cartItemsContainer.children.length === 0) {
+    // Add the message if the cart is empty
+    cartItemsContainer.append(messageContainer);
+  }
+}
+
+// Cart icon functionality
 cartIcon.addEventListener("click", () => {
   cartTab.classList.add("show-cart");
+
+  // Check if there are items in the cart
+  updateCartMessage();
 });
 
 cartClose.addEventListener("click", () => {
@@ -393,7 +177,7 @@ cartClose.addEventListener("click", () => {
 
 // Cart Array to Store Items
 let cartItems = [];
-let fullName, contact, address, notes;
+let fullNameInput, contactInput, addressInput, notes;
 
 // Add Item to Cart Function
 function addToCart(itemName, itemPrice, itemImg, itemQuantity = 1) {
@@ -456,6 +240,9 @@ function renderCartItems() {
     `;
     cartItemsContainer.insertAdjacentHTML("beforeend", html);
   });
+
+  // After rendering items, check if the cart is empty
+  updateCartMessage();
 }
 
 // Event Listener for Increment, Decrement, and Delete Buttons
@@ -502,8 +289,6 @@ orderBtn.forEach((button) => {
     const itemPrice = parseFloat(button.dataset.price);
     const itemImg = button.dataset.img;
 
-    console.log(itemName, itemPrice, itemImg);
-
     // Add item to cart
     addToCart(itemName, itemPrice, itemImg);
   });
@@ -519,40 +304,26 @@ function calcTotalPrice() {
 }
 
 // Open CheckOut modal
-const messageContainer = document.createElement("div");
-messageContainer.classList.add("message-container");
-messageContainer.style.cssText = `
-    background-color: var(--first-color);
-    color: var(--title-color)
-    text-align: center;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-  `;
-messageContainer.textContent = "Your cart is empty!";
 checkoutBtn.addEventListener("click", function (e) {
-  // Prevent form submission if modal is open
   e.preventDefault();
-  // Check if cart is empty and if messageContainer is already there
+  // Check if the cart is empty
   if (cartItems.length === 0) {
-    // Append the message container if it’s not already there
+    // Append the message container if it’s not already present
     if (!cartItemsContainer.contains(messageContainer)) {
+      setEmptyMessageStyle();
       cartItemsContainer.append(messageContainer);
     }
+    // Prevent opening the checkout modal when the cart is empty
     return;
-  } else {
-    // Remove the message container if it’s there and the cart is not empty
-    if (cartItemsContainer.contains(messageContainer)) {
-      cartItemsContainer.removeChild(messageContainer);
-    }
   }
 
   // Open modal
   checkoutModal.style.display = "block";
-  // close cartTab
+  // Close cart tab
   cartTab.classList.remove("show-cart");
-  // Apply Overlay
+  // Apply overlay
   overlay.style.display = "block";
+  // Focus on the full name field
   document.getElementById("full-name").focus();
 });
 
@@ -560,8 +331,6 @@ checkoutBtn.addEventListener("click", function (e) {
 closeCheckout.addEventListener("click", function () {
   // Close modal
   checkoutModal.style.display = "none";
-  // Open cartTab
-  // cartTab.classList.add("show-cart");
   // Remove Overlay
   overlay.style.display = "none";
 });
@@ -570,53 +339,78 @@ closeCheckout.addEventListener("click", function () {
 overlay.addEventListener("click", function () {
   // Close modal
   checkoutModal.style.display = "none";
-  // Open cartTab
-  // cartTab.classList.add("show-cart");
   // Remove Overlay
   overlay.style.display = "none";
 });
 
 // Process The User Data
-function processUserData() {
-  fullName = document.getElementById("full-name").value;
-  contact = document.getElementById("contact-number").value;
-  address = document.getElementById("address").value;
-  notes = document.getElementById("notes").value;
-  // Clear the User Data
+function validateField(inputElement) {
+  if (!inputElement.value) {
+    inputElement.style.border = "1px solid red";
+    inputElement.classList.add("invalid");
+    return false;
+  }
+  return true;
+}
 
-  // console.log(fullName, contact, address, notes);
-  // validate
-  // if (fullName === "" || contact === "" || address === "") {
-  //   console.log("Please fill in all required fields.");
-  //   return;
-  // }
+function processUserData() {
+  fullNameInput = document.getElementById("full-name");
+  contactInput = document.getElementById("contact-number");
+  addressInput = document.getElementById("address");
+  notes = document.getElementById("notes");
+
+  // Validate User Data
+  if (
+    !validateField(fullNameInput) ||
+    !validateField(contactInput) ||
+    !validateField(addressInput)
+  ) {
+    return;
+  }
 
   // Show success message
   successModal.style.display = "grid";
   successMessageGenerator();
-  // Overlay
-  // overlay.style.display = "block";
-  // Clear Items Array
+
+  // Clear Cart and Update UI
   cartItems = [];
   cartCount.textContent = 0;
   renderCartItems();
   calcTotalPrice(); // Update total price after removing
+
   // Close Checkout modal
   checkoutModal.style.display = "none";
 }
 
-// processUserData();
+// Function to clear the red border and invalid class when typing
+function clearValidationOnTyping(inputElement) {
+  inputElement.addEventListener("input", function () {
+    if (inputElement.value) {
+      inputElement.style.border = ""; // Remove the red border
+      inputElement.classList.remove("invalid"); // Remove the invalid class
+    }
+  });
+}
+
+// Attach event listeners to inputs for clearing validation
+function attachValidationListeners() {
+  const fullNameInput = document.getElementById("full-name");
+  const contactInput = document.getElementById("contact-number");
+  const addressInput = document.getElementById("address");
+
+  clearValidationOnTyping(fullNameInput);
+  clearValidationOnTyping(contactInput);
+  clearValidationOnTyping(addressInput);
+}
+
+// Call the function to attach event listeners when the page loads
+attachValidationListeners();
 
 // Place Order
 placeOrderBtn.addEventListener("click", function (e) {
   e.preventDefault();
   // Process User Data
   processUserData();
-  // Clear input fields
-  // Close Checkout modal
-  // checkoutModal.style.display = "none";
-  // Display Success Message
-  // document.getElementById("success-message").style.display = "block";
 });
 
 // success message function
@@ -628,11 +422,11 @@ function successMessageGenerator() {
   successMessage.innerHTML = `
       <div class="modal-content">
          <h2>Dear ${
-           fullName.split(" ")[0][0].toUpperCase() +
-           fullName.split(" ")[0].slice(1)
+           fullNameInput.value.split(" ")[0][0].toUpperCase() +
+           fullNameInput.value.split(" ")[0].slice(1)
          }, your order is successfully placed!</h2>
          <p>Thank you for your order.</p>
-         <a href="#" class="check-status-btn">Check Status</a>
+         <a href="#" class="check-status-btn">Close</a>
       </div>
 `;
 
@@ -640,11 +434,14 @@ function successMessageGenerator() {
   document.getElementById("success-modal").appendChild(successMessage);
 
   const checkStatusBtn = successMessage.querySelector(".check-status-btn");
-  checkStatusBtn.addEventListener("click", function () {
+  checkStatusBtn.addEventListener("click", function (e) {
+    e.preventDefault();
     successModal.style.display = "none";
     overlay.style.display = "none";
-    fullName = contact = address = notes = "";
-
-    // Redirect to check status page
+    fullNameInput.value =
+      contactInput.value =
+      addressInput.value =
+      notes.value =
+        "";
   });
 }

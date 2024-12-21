@@ -145,8 +145,6 @@ img {
   column-gap: 0.5rem;
   font-family: var(--second-font);
   color: var(--title-color);
-  /* font-size: var(--h2-font-size);
-  font-weight: var(--font-semi-bold); */
 }
 
 .nav__logo img {
@@ -157,7 +155,6 @@ img {
   background-color: var(--first-color);
   padding: 6px;
   border-radius: 0.5rem;
-  /* box-shadow: var(--shadow-small-img); */
 }
 
 .nav__toggle,
@@ -316,10 +313,6 @@ img {
   transition: transform 0.3s;
 }
 
-/* .cartTab .close:hover {
-  transform: rotate(90deg);
-} */
-
 .cartTab .listCart .item img {
   width: 100%;
 }
@@ -331,16 +324,6 @@ img {
   text-align: center;
   align-items: center;
 }
-
-/* .cartTab .listCart .cart__empty {
-  display: flex;
-  background-color: red;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-} */
 
 .listCart .quantity {
   display: flex;
@@ -402,7 +385,7 @@ img {
   padding: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px); /* Adds a frosted glass effect */
+  backdrop-filter: blur(5px);
 }
 
 /* Cart Total */
@@ -492,6 +475,11 @@ img {
   transition: background-color 0.3s;
 }
 
+/* Change placeholder color to red when input is invalid */
+.invalid::placeholder {
+  color: red;
+}
+
 #delivery-form input:focus {
   outline: 1px solid var(--first-color);
 }
@@ -547,7 +535,6 @@ img {
 /* Success Message */
 #success-modal {
   position: fixed;
-  /* background-color: rgba(0, 0, 0, 0.5); */
   width: 90%;
   height: auto;
   top: 50%;
@@ -578,7 +565,6 @@ img {
 }
 
 .modal-content h2 {
-  /* font-size: var(--h2-font-size); */
   margin-bottom: 1rem;
 }
 
@@ -1069,16 +1055,12 @@ img {
     width: 40px;
   }
 
-  /* .listCart {
-    margin-inline: 0.5rem;
-  } */
-
   .listCart {
     margin: 0 auto;
   }
 
   .cartTab .listCart .item {
-    grid-template-columns: 50px 70px 1fr 1fr;
+    grid-template-columns: 50px 70px 1fr 1fr 1fr;
     gap: 0;
   }
 
@@ -1147,6 +1129,64 @@ img {
   }
 }
 
+@media screen and (max-width: 540px) and (min-width: 330px) {
+  .nav__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .cartTab {
+    width: 260px;
+  }
+
+  .cartTab h1 {
+    font-size: 1.5rem;
+  }
+
+  .cartTab .image {
+    width: 40px;
+  }
+
+  .listCart {
+    margin: 0 auto;
+  }
+
+  .cartTab .listCart .item {
+    grid-template-columns: 50px 70px 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .cartTab .listCart .item .name {
+    font-size: 0.8rem;
+    max-width: 70px;
+  }
+
+  .cartTab .listCart .item .totalPrice {
+    font-size: 0.8rem;
+  }
+
+  .cart__count {
+    left: 0;
+    width: fit-content;
+  }
+
+  .listCart .item .quantity {
+    gap: 0;
+  }
+
+  .listCart .item .quantity span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: 18px;
+    height: 18px;
+  }
+
+  .listCart .item {
+    margin-bottom: 0.5rem;
+  }
+}
+
 /* For medium devices */
 @media screen and (min-width: 540px) {
   .home__container,
@@ -1185,10 +1225,6 @@ img {
     margin: 0 auto;
   }
 
-  /* .cartTab .listCart .item .name {
-    max-width: 70px;
-  } */
-
   .listCart .item {
     margin-bottom: 1rem;
   }
@@ -1197,53 +1233,50 @@ img {
 /*=============== MEDIA QUERIES ===============*/
 @media screen and (max-width: 650px) {
   #delivery-form {
-    grid-template-columns: 1fr 1fr; /* Two columns layout */
-    grid-template-rows: 50px 50px 1fr auto; /* Adjusted rows for improved layout */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 50px 1fr auto;
     width: 100%;
   }
 
   #full-name {
-    grid-column: 1 / -1; /* Full-width in the first row */
+    grid-column: 1 / -1;
     grid-row: 1;
   }
 
   #contact-number {
-    grid-column: 1 / -1; /* Full-width in the second row */
+    grid-column: 1 / -1;
     grid-row: 2;
   }
 
   #address {
-    grid-column: 1 / -1; /* Full-width for the address field */
+    grid-column: 1 / -1;
     grid-row: 3;
   }
 
   #notes {
-    grid-column: 1 / -1; /* Full-width for notes */
+    grid-column: 1 / -1;
     grid-row: 4;
   }
 
-  /* Set both textareas side by side */
   #address,
   #notes {
-    grid-column: span 1; /* Each textarea takes one column */
-    grid-row: 3 / 4; /* Both textareas span the same row */
+    grid-column: span 1;
+    grid-row: 3 / 4;
   }
 
-  /* Adjusting both textareas to occupy 3/4 row */
   #address {
-    grid-column: 1; /* First column for the address textarea */
+    grid-column: 1;
     grid-row: 3;
   }
 
   #notes {
-    grid-column: 2; /* Second column for the notes textarea */
+    grid-column: 2;
     grid-row: 3;
   }
 
   #place-order {
-    grid-column: 1 / -1; /* Full-width for the submit button */
+    grid-column: 1 / -1;
     grid-row: 5;
-    /* justify-self: center; */
   }
 }
 
