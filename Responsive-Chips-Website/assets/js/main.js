@@ -54,6 +54,12 @@ const headerObserver = new IntersectionObserver(
 headerObserver.observe(homeSection);
 
 /*=============== SWIPER FAVORITES ===============*/
+const swiperFavorites = new Swiper(".favorites__swiper", {
+  loop: true,
+  grabCursor: true,
+  slidesPerView: "auto",
+  centeredSlides: true,
+});
 
 /*=============== SHOW SCROLL UP ===============*/
 
