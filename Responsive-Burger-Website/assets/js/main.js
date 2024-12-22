@@ -24,6 +24,7 @@ const navLink = document.querySelectorAll(".nav__link");
 
 const linkAction = () => {
   navMenu.classList.remove("show-menu");
+  document.querySelector(".nav__link--cart").style.display = "block";
 };
 
 navLink.forEach((link) => link.addEventListener("click", linkAction));
