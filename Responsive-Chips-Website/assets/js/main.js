@@ -31,6 +31,27 @@ const linkAction = () => {
 navLink.forEach((link) => link.addEventListener("click", linkAction));
 
 /*=============== SHADOW HEADER ===============*/
+const header = document.getElementById("header");
+const homeSection = document.getElementById("home");
+
+const headerObserver = new IntersectionObserver(
+  (entries) => {
+    const [entry] = entries;
+    console.log(entry);
+    if (!entry.isIntersecting) {
+      header.classList.add("shadow-header");
+    } else {
+      header.classList.remove("shadow-header");
+    }
+  },
+  {
+    root: null,
+    threshold: 0.9,
+    rootMargin: "0px",
+  }
+);
+
+headerObserver.observe(homeSection);
 
 /*=============== SWIPER FAVORITES ===============*/
 
